@@ -19,12 +19,18 @@ def main():
         print('4: Spell Check Alice In Wonderland (Binary Search)')
         print('5: Exit')
         choice = int(input('Select an option '))
-        if(choice == 1 or choice == 2):
-            spellCheckWord(choice, dictionary)
-        elif(choice == 3 or choice == 4):
-            spellCheckAlice(choice, dictionary, aliceWords)
+        if(choice == 1):
+            spellCheckWord(linearSearch, dictionary)
+        elif(choice == 2):
+            spellCheckWord(binarySearch, dictionary)
+        elif(choice == 3):
+            spellCheckAlice(linearSearch, dictionary, aliceWords)
+        elif(choice == 4):
+            spellCheckAlice(binarySearch, dictionary, aliceWords)
         else:
             exit = True
+
+
 
 def loadWordsFromFile(fileName):
     # Read file as a string
@@ -39,33 +45,22 @@ def loadWordsFromFile(fileName):
 
 
 
-def spellCheckWord(choice, array):
+def spellCheckWord(alg, array):
     word = input('enter word: ')
     time1 = time.time()
-    if(choice == 1):
-        response = linearSearch(array, word)
-        time2 = time.time()
-    else:
-        response = binarySearch(array, word)
-        time2 = time.time()
+    response = alg(array, word)
+    time2 = time.time()
     if(response > -1):
         print(f'{word} found in dictionary at position {response}. Time = {time2 - time1} seconds')
     else:
         print(f'{word} not found in dictionary. Time = {time2 - time1} seconds')
     
-def spellCheckAlice(choice, array, text):
+def spellCheckAlice(alg, array, text):
     time1 = time.time()
     totWords = 0
-    if(choice == 3):
-        for word in text:
-            word = word.lower()
-            if(linearSearch(array, word) == -1):
-                totWords+=1
-        time2 = time.time()
-    else:
-        for word in text:
-            word = word.lower()
-            if(binarySearch(array, word) == -1):
+    for word in text:
+        word = word.lower()
+        if(alg(array, word) == -1):
                 totWords+=1
         time2 = time.time()
     print(f'total words not found in dictionary: {totWords}. Time = {time2 - time1} seconds')
