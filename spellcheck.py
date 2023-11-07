@@ -62,7 +62,7 @@ def spellCheckAlice(alg, array, text):
         word = word.lower()
         if(alg(array, word) == -1):
                 totWords+=1
-        time2 = time.time()
+    time2 = time.time()
     print(f'total words not found in dictionary: {totWords}. Time = {time2 - time1} seconds')
 
 def linearSearch(array, item):
